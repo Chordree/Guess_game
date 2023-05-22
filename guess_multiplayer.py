@@ -1,21 +1,20 @@
-# TODO: make this a two player and AI version
+# you have to install the pwinput module for masking .. magic number 
 
-#  count scores and add ..first to max num based on range ..or default
-#  for the AI version ..high and low to streamline computer guess
 
-# this works fine ... PWinput.. rename and post on gitHub ..remove all unnecessary comments
 import random
 import pwinput as pn  # this module is just to mask the secret number from the guesser 
 print('you are welcome to the guess game')
-print(__name__)  # this line is not needed .. just used it to show what if __name__ = __main__ implies 
+
 
 # note the AI mode doesn't work here .. i just used it to test the demo round 
+# it would later switch to multiplayer .. see the implementation in another version 
 
 # make this call another function that would handle the game sections and all
 # this would be removed here and use for the combination where we would have both single and multiplayer
 def play_mode():
     game_mode = input('select (M) for multiplayer or (C) to play against computer: ')
 
+    # note the aI mode is not fuctional in this version was just testing out some features 
     if game_mode.strip().upper() == 'M':
         multiplayer()
 
@@ -29,7 +28,8 @@ def play_mode():
 
 
 # to optimize this code ..this function can be renamed  human_player_input().. the checkwin seprated from it
-# i.e it would handle all possible errors from human input .. be it secrete num or guess
+# i.e it would handle all possible errors from human input .. 
+# the only advantage separating the above has is magic num can be masked while guess is dispalayes 
 # see the updated version in the multiplyer and ai version in my repo
 def multiplayer():
     while True:
@@ -126,7 +126,7 @@ def main():
 # Editors choice:
 #  see how to implement AI , remove unnecessary comments ...set maximum score for competing within a range
 # the scores shoud be set based on players choice
-#  remove the call of multiplayer function from the play mode...input human/human and AI mode
+
 
 
 # add an if statement to continue playing  or while loop with an input to quit 
