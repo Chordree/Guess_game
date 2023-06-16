@@ -1,6 +1,23 @@
 import random
+import ai_players as ai
+
+# NOTE rename this file properly 
+
+# allow for user input name... remove all test comments 
 
 #  the prameter a added in the check_win would account for switching
+print('Welcome to this thrilling guessing game ')
+def difficultymode():
+    print('enter [E] for easy mode, [M] for medium mode or [H] for Hard mode ')
+    diff_val = input('enter difficulty level("E" or "M" or "H"): ').strip().upper()
+    while diff_val not in ['E', 'M', 'H']:
+        print('you didn\'t eneter a valid choice , pls read the instructions below')
+        diff_val = input('enter difficulty level("E" or "M" or "H"): ').strip().upper()
+
+    return diff_val
+
+mode = difficultymode()    
+
 def check_win(a):
     guess = 'ab'  # this is just to ensure a neutral non numeric  value for guess before starting..to trigger while loop
     if a % 2 == 0:
@@ -15,9 +32,12 @@ def check_win(a):
         if a % 2 == 0:
             guess = human_input()       # input('guess a number btw 1 and 10: ')
         else:
-            guess = AI_input(num)
+            guess = comp_player(mode, num)
             count = 3  # i made count = 3 at once cause AI input takes care of all the iterations/ ai turn counts
+            # you can also use a break here intead of settting count = 3 ..check the differnece
             print('aI is done guessing ')  # remove this later on 
+            
+            
         if guess > num:
             print('too high, try again')
         if guess < num:
@@ -35,49 +55,17 @@ def check_win(a):
     print(num)
 
 
-def AI_input(MAGIC_NUM):
-    guess = 'a'    # see if this is necessary
-    count = 0
-    used_nums = []
-    b = 1
-    l = 11
-    while guess != MAGIC_NUM and count < 3:
-        guess = random.randrange(b, l)
-        
-        print('ai guessed the number: ', guess)
-        while guess in used_nums:
-            guess = random.randrange(b, l)
-            print('guess again is', guess)
-        if not 1 <= guess <= 10:
-            print('pls enter a correct value btw 1 and 10')
-            # this if would never execute. since AI input would never go out of range 
-            # the code would still work fine .. if this if block above is commented well .. see while/else block
-            # the else works when the while executes to false .. so if the if is removed, when the while executes to false the else is excuted
-            # i.e the else excutes so far the loop is not broken, i.e breaking a while loop is not same as setting trigger condition to false
-        else:
-            if guess > MAGIC_NUM:
-                print('too high, try again')
-                hint = 'h'
-                l = guess + 1  # this was done intentionally to avoid any clashes .. i.e range(5, 5) e.t.c
-            if guess < MAGIC_NUM:
-                print('too low, try again')
-                hint = 'l'
-                b = guess + 1
+def comp_player(diff_var, hidden_num):
+    if diff_var == 'E':
+        return ai.ai_easy(hidden_num)
+    elif diff_var == 'M':
+        return ai.ai_medium(hidden_num)
+    elif diff_var == 'H':
+        return ai.ai_hard(hidden_num)
 
-        if guess == MAGIC_NUM:
-            print('yeah nice one i read your mind right')
-            break
-        count += 1
-        used_nums.append(guess)
-        
-
-    if guess != MAGIC_NUM:
-        print('end of turn try harder next time')
-
-    return guess
 
 def human_input():
-    while True:       # isdigit fuction call also be used here 
+    while True:       # isdigit fuction call can also be used also be used in place of try/except block below 
         try:
             val = int(input('enter a number btw 1 and 10: '))
             if not 1 <= val <= 10:
@@ -91,8 +79,7 @@ def human_input():
     return val
 
 
-# if AI is selected turns should alternate btw AI Human
-# if human is selected ... all turn calls should just be human inputs
+
 def main():
     p1 = 'AI'
     p2 = 'you' #Todo: ask  user to enter name here  .. if need be
@@ -131,7 +118,5 @@ def main():
 main()
 
 #TODO: list below 
-# create a version without hint for the user .
-# try a 4567 Ai version ..
-# create a fuction to handle all leves of aI.
+# create a version without hint for the human_player .
 # a comination that can switch btw multiplayer and AI.
